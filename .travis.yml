@@ -6,16 +6,22 @@ services:
 before_install:
   - docker-compose -f docker-compose.travis.yml build
 
+before_script:
+  - docker tag cookie-cage/resume-subscription-api:latest cookie-cage/resume-subscription-api:v0.0.1
+
 script:
-  - docker-compose -f docker-compose.travis.yml up
-
-before_deploy:
-  - docker login --username $DOCKER_LOGIN_USERNAME --password $DOCKER_LOGIN_PASSWORD
-
-deploy:
-  provider: script
-  script:
+    - docker login --username $DOCKER_LOGIN_USERNAME --password $DOCKER_LOGIN_PASSWORD
     - docker push cookie-cage/resume-subscription-api:latest
     - docker push cookie-cage/resume-subscription-api:v0.0.1
-  on:
-    branch: master
+
+deploy:
+  - provider: script
+    script:
+      - ssh $SSH_USER@$SSH_HOST_STAGING "cd resume-subscription-api ; git pull ; docker-compose up -d"- ssh $SSH_USER@$SSH_HOST_STAGING
+    on:
+      branch: master
+  - provider: script
+    script:
+      - ssh $SSH_USER@$SSH_HOST_PROD "cd resume-subscription-api ; git pull ; docker-compose up -d"
+    on:
+      branch: master
