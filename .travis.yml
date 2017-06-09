@@ -13,5 +13,8 @@ script:
   - npm start ; curl localhost:80/healthcheck
 
 before_deploy:
+  - docker login --username $DOCKER_LOGIN_USERNAME --password $DOCKER_LOGIN_PASSWORD
+
+deploy:
   - docker push cookie-cage/resume-subscription-api:latest
   - docker push cookie-cage/resume-subscription-api:v0.0.1
