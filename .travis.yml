@@ -4,11 +4,10 @@ services:
   - docker
 
 before_install:
-  - docker-compose build
+  - docker-compose -f docker-compose.travis.yml build
 
 script:
-  - docker-compose up -d
-  - curl localhost/healthcheck
+  - docker-compose -f docker-compose.travis.yml up
 
 before_deploy:
   - docker login --username $DOCKER_LOGIN_USERNAME --password $DOCKER_LOGIN_PASSWORD
