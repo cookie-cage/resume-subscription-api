@@ -8,8 +8,6 @@ services:
     image: rezme/resume-subscription-api
     build:
       context: .
-    volumes:
-      - .:/opt/app
     env_file: .env
     ports:
       - 80:80
