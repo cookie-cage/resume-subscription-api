@@ -1,0 +1,17 @@
+version: "3"
+services:
+  api:
+    image: rezme/resume-subscription-api
+    env_file: .env
+    ports:
+      - 80:80
+    networks:
+      - api
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100k"
+        max-file: "2"
+networks:
+  api:

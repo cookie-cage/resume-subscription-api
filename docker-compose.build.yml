@@ -1,0 +1,7 @@
+version: "3"
+services:
+  api:
+    image: rezme/resume-subscription-api
+    build:
+      context: .
+      dockerfile: Dockerfile
