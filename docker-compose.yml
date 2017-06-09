@@ -9,7 +9,7 @@ services:
     build:
       context: .
     volumes:
-    -.:/opt/app
+      - .:/opt/app
     env_file: .env
     ports:
       - 80:80
