@@ -7,12 +7,12 @@ before_install:
   - docker-compose -f docker-compose.travis.yml build
 
 before_script:
-  - docker tag cookie-cage/resume-subscription-api:latest cookie-cage/resume-subscription-api:v0.0.1
+  - docker tagrezme/resume-subscription-api:latestrezme/resume-subscription-api:v0.0.1
 
 script:
     - docker login --username $DOCKER_LOGIN_USERNAME --password $DOCKER_LOGIN_PASSWORD
-    - docker push cookie-cage/resume-subscription-api:latest
-    - docker push cookie-cage/resume-subscription-api:v0.0.1
+    - docker pushrezme/resume-subscription-api:latest
+    - docker pushrezme/resume-subscription-api:v0.0.1
 
 deploy:
   - provider: script
