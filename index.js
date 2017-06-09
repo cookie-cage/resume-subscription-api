@@ -1,18 +1,15 @@
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
+'use strict';
 
-var index = require('./resources/index');
-var healthcheck = require('./resources/healthcheck');
+var app = require('express')();
 
-var app = express();
+// TODO - use promise instead
+require('./middlewares/index.js')(app, function(err){
+    if(err)
+        return console.error(err);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+    require('./routes.js')(app);
 
-app.use('/', index);
-app.use('/healthcheck', healthcheck);
-
-app.listen(process.env.APP_PORT, function(){
-    console.log('listening on port:' + process.env.APP_PORT);
+    app.listen(process.env.APP_PORT, function(){
+        console.log('listening on port:' + process.env.APP_PORT);
+    });
 });

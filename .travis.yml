@@ -4,13 +4,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t vendoring -f Dockerfile-vendor .
-  - docker run -v node-modules:/opt/app/node-modules vendoring
   - docker build -t cookie-cage/resume-subscription-api .
-  - chown $USER:$USER -R `pwd`/node_modules
-
-script:
-  - npm start ; curl localhost:80/healthcheck
 
 before_deploy:
   - docker login --username $DOCKER_LOGIN_USERNAME --password $DOCKER_LOGIN_PASSWORD

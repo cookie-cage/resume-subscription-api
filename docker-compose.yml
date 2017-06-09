@@ -1,17 +1,17 @@
 version: "3"
 services:
+  mongo:
+    image: mongo:3.4.4
+    ports:
+      - 27017:27017
   api:
     image: rezme/resume-subscription-api
+    build:
+      context: .
+    volumes:
+    -.:/opt/app
     env_file: .env
     ports:
       - 80:80
-    networks:
-      - api
-    restart: always
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100k"
-        max-file: "2"
-networks:
-  api:
+    depends_on:
+      - mongo

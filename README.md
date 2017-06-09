@@ -10,19 +10,9 @@ Subscription API for resume ecosystem.
 
 ## usage
 
-## download dependencies
+## build
 ```shell
-docker-compose -f docker-compose.vendor.yml up --build
-```
-
-## build docker image
-```shell
-docker-compose -f docker-compose.build.yml build
-```
-
-## fix file permissions
-```shell
-sudo chown $USER:$USER -R `pwd`/node_modules
+docker-compose build
 ```
 
 ## run
