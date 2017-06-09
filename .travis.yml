@@ -6,28 +6,12 @@ services:
 before_install:
   - docker build -t vendoring -f Dockerfile-vendor .
   - docker run -v node-modules:/opt/app/node-modules vendoring
-
-install:
   - docker build -t cookie-cage/resume-subscription-api .
-
-after_install:
   - chown $USER:$USER -R `pwd`/node_modules
 
-# before_script:
-#   -
-
 script:
-  - docker tag cookie-cage/resume-subscription-api:latest cookie-cage/resume-subscription-api:v0.0.1
+  - npm start ; curl localhost:80/healthcheck
 
 before_deploy:
   - docker push cookie-cage/resume-subscription-api:latest
   - docker push cookie-cage/resume-subscription-api:v0.0.1
-
-# deploy:
-#   -
-
-# after_deploy:
-#   -
-
-# after_script:
-#   -
