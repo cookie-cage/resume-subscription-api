@@ -22,11 +22,13 @@ deploy:
     script:
       - echo $SSH_PRIVATE_KEY > ssh_id_key
       - ssh -i ssh_id_key $SSH_USER@$SSH_HOST_STAGING "cd resume-subscription-api ; git pull ; docker-compose up -d"- ssh $SSH_USER@$SSH_HOST_STAGING
+    skip_cleanup: true
     on:
       branch: master
   - provider: script
     script:
       - echo $SSH_PRIVATE_KEY > ssh_id_key
       - ssh -i ssh_id_key $SSH_USER@$SSH_HOST_PROD "cd resume-subscription-api ; git pull ; docker-compose up -d"
+    skip_cleanup: true
     on:
       branch: master
