@@ -6,6 +6,10 @@ services:
 before_install:
   - docker build -t cookie-cage/resume-subscription-api .
 
+script:
+  - docker run -p 80:80 cookie-cage/resume-subscription-api
+  - curl localhost/healthcheck
+
 before_deploy:
   - docker login --username $DOCKER_LOGIN_USERNAME --password $DOCKER_LOGIN_PASSWORD
 
