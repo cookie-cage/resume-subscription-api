@@ -12,6 +12,7 @@ COPY resources resources
 COPY services services
 COPY index.js index.js
 COPY package.json package.json
+COPY routes.js routes.js
 COPY README.md README.md
 
 RUN npm install
