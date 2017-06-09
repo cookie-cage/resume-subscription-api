@@ -17,11 +17,13 @@ script:
 deploy:
   - provider: script
     script:
-      - ssh $SSH_USER@$SSH_HOST_STAGING "cd resume-subscription-api ; git pull ; docker-compose up -d"- ssh $SSH_USER@$SSH_HOST_STAGING
+      - echo $SSH_PRIVATE_KEY > ssh_id_key
+      - ssh -i ssh_id_key $SSH_USER@$SSH_HOST_STAGING "cd resume-subscription-api ; git pull ; docker-compose up -d"- ssh $SSH_USER@$SSH_HOST_STAGING
     on:
       branch: master
   - provider: script
     script:
-      - ssh $SSH_USER@$SSH_HOST_PROD "cd resume-subscription-api ; git pull ; docker-compose up -d"
+      - echo $SSH_PRIVATE_KEY > ssh_id_key
+      - ssh -i ssh_id_key $SSH_USER@$SSH_HOST_PROD "cd resume-subscription-api ; git pull ; docker-compose up -d"
     on:
       branch: master
