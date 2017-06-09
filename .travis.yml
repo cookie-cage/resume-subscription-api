@@ -14,6 +14,9 @@ script:
     - docker push rezme/resume-subscription-api:latest
     - docker push rezme/resume-subscription-api:v0.0.1
 
+before_deploy:
+  - echo preparing
+
 deploy:
   - provider: script
     script:
