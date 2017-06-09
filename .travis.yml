@@ -1,5 +1,8 @@
 sudo: required
 
+environment:
+  - RELEASE_VERSION=`cat release_version.txt`
+
 services:
   - docker
 
@@ -7,28 +10,13 @@ before_install:
   - docker-compose -f docker-compose.travis.yml build
 
 before_script:
-  - docker tag rezme/resume-subscription-api:latest rezme/resume-subscription-api:v0.0.1
+  - docker tag rezme/resume-subscription-api:latest rezme/resume-subscription-api:$RELEASE_VERSION
 
 script:
-    - docker login --username $DOCKER_LOGIN_USERNAME --password $DOCKER_LOGIN_PASSWORD
-    - docker push rezme/resume-subscription-api:latest
-    - docker push rezme/resume-subscription-api:v0.0.1
+  - docker login --username $DOCKER_LOGIN_USERNAME --password $DOCKER_LOGIN_PASSWORD
+  - docker push rezme/resume-subscription-api:latest
+  - docker push rezme/resume-subscription-api:$RELEASE_VERSION
 
-before_deploy:
-  - echo preparing
-
-deploy:
-  - provider: script
-    script:
-      - echo $SSH_PRIVATE_KEY > ssh_id_key
-      - ssh -i ssh_id_key $SSH_USER@$SSH_HOST_STAGING "cd resume-subscription-api ; git pull ; docker-compose up -d"- ssh $SSH_USER@$SSH_HOST_STAGING
-    skip_cleanup: true
-    on:
-      branch: master
-  - provider: script
-    script:
-      - echo $SSH_PRIVATE_KEY > ssh_id_key
-      - ssh -i ssh_id_key $SSH_USER@$SSH_HOST_PROD "cd resume-subscription-api ; git pull ; docker-compose up -d"
-    skip_cleanup: true
-    on:
-      branch: master
+after_script:
+  - docker pull rezme/resume-subscription-api:latest
+  - docker pull rezme/resume-subscription-api:$RELEASE_VERSION
