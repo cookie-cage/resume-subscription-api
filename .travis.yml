@@ -1,12 +1,14 @@
 sudo: required
 
 environment:
-  - RELEASE_VERSION=`cat release_version.txt`
-
+  - RELEASE_VERSION=
 services:
   - docker
 
 before_install:
+  - RELEASE_VERSION=`cat release_version.txt`
+
+install:
   - docker-compose -f docker-compose.travis.yml build
 
 before_script:
