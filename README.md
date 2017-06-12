@@ -10,12 +10,7 @@ Subscription API for resume ecosystem.
 
 ## usage
 
-## build
-```shell
-docker-compose build
-```
-
 ## run
 ```shell
-docker-compose up
+docker-compose up --build
 ```
